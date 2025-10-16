@@ -143,6 +143,11 @@ app.use((err, req, res, next) => {
 // });
 
 //1]starting server on 8080
-app.listen(8080,()=>{
-  console.log("Server is listening to port 8080");
+// app.listen(8080,()=>{
+//   console.log("Server is listening to port 8080");
+// });
+const PORT = process.env.PORT || 8080; // fallback for local development
+
+app.listen(PORT, "0.0.0.0", () => {
+  console.log(`Server is listening on port ${PORT}`);
 });
