@@ -1,0 +1,99 @@
+<% layout("/layouts/boilerplate") -%>
+
+<div class="container my-4">
+  <div class="row">
+    <div class="col-8 offset-2">
+
+      <h3 class="mb-4 text-center"><%= specific.title %></h3>
+
+      <!-- Card -->
+      <div class="card shadow-lg">
+        <img src="<%= specific.image.url %>" class="show-img" alt="listing_image">
+        <div class="card-body">
+          <p class="card-body">Owned by:- <i><%= specific.owner.username %></i></p>
+          <br>
+          <p class="card-text"><%= specific.description %></p>
+          <p class="card-text"><strong>Price: &#x20B9</strong> <%= specific.price %></p>
+          <p class="card-text"><strong>Location:</strong> <%= specific.location %>, <%= specific.country %></p>
+        </div>
+      </div>
+
+      <!-- Action Buttons -->
+
+  <div class="d-flex justify-content-between mt-3">
+    <a href="/listing/<%= specific._id %>/edit" class="btn btn-warning">✏️ Edit</a>
+    <form method="POST" action="/listing/<%= specific._id %>?_method=DELETE" onsubmit="return confirm('Are you sure you want to delete this listing?');">
+      <button class="btn btn-danger">🗑 Delete</button>
+    </form>
+  </div>
+
+
+      <!-- Form for Review listing -->
+       <% if(currUser) { %>
+      <h2 class="mt-5">Leave Review</h2>
+      <form class="p-4 shadow rounded bg-white needs-validation" 
+            style="max-width: 500px; margin: auto;" 
+            action="/listing/<%= specific._id %>/reviews" 
+            method="POST" 
+            novalidate>
+
+        <div class="mb-3">
+          <label for="rating" class="form-label fw-bold">Rating</label>
+          <input type="range" class="form-range" min="1" max="5" id="rating" name="review[rating]" required>
+          <div class="invalid-feedback">
+            Please provide a rating.
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="comment" class="form-label fw-bold">Comment</label>
+          <textarea class="form-control" name="review[comment]" id="comment" cols="30" rows="5" required></textarea>
+          <div class="invalid-feedback">
+            Please enter a comment.
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary w-100">Submit</button>
+      </form>
+
+      <% } %>
+
+      <!-- Reviews Section -->
+      <div class="mt-5">
+  <h4 class="mb-3">All Reviews</h4>
+  
+  <% if (specific.reviews.length === 0) { %>
+    <div class="alert alert-info text-center">
+      No reviews yet. Be the first to review!
+    </div>
+  <% } else { %>
+    <ul class="list-group shadow-sm rounded">
+      <% for (let review of specific.reviews) { %>
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          <div>
+            <p class="mb-1 fw-semibold"><%= review.comment %></p>
+            <small class="text-muted">Rating: <%= review.rating %> ⭐</small>
+          </div>
+          <div class="d-flex align-items-center">
+            <span class="badge bg-primary rounded-pill me-2">
+              <%= review.rating %>
+            </span>
+            <form class="d-inline-block" 
+                  method="POST" 
+                  action="/listing/<%= specific._id %>/reviews/<%= review._id %>?_method=DELETE">
+              <button class="btn btn-sm btn-danger px-3 py-1 shadow-sm rounded-pill">
+                <i class="bi bi-trash"></i> Delete
+              </button>
+            </form>
+          </div>
+        </li>
+      <% } %>
+    </ul>
+  <% } %>
+</div>
+
+
+    </div>
+  </div>
+</div>
+

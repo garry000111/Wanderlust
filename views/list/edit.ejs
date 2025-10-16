@@ -1,0 +1,48 @@
+<% layout("/layouts/boilerplate") -%>
+<body>
+  
+  <div class="row mt-3">
+    <div class="col-8 offset-2">
+      <b><h2>Edit Listing:</h2></b>
+      <form method="POST" action="/listing/<%= listing._id %>?_method=PUT" novalidate class="needs-validation">
+
+    <div class="md-3">
+    <label for="title" class="form-label">Title:</label>
+    <input name="listing[title]" value="<%= listing.title %>" class="form-control" required>
+    </div>
+    
+    <div class="md-3">
+    <label for="description" class="form-label">Description:</label>
+    <textarea name="listing[description]" class="form-control" required><%= listing.description %></textarea>
+    </div>
+
+    <div class="md-3">
+    <label for="image" class="form-label">Image Link:</label>
+    <input name="listing[image][url]" value="<%= listing.image.url %>" class="form-control">
+    </div>
+
+    <div class="row">
+    <div class="md-3 col-md-4">
+      <label for="price" class="form-label">Price:</label>
+    <input name="listing[price]" value="<%= listing.price %>" class="form-control" required>
+    </div>
+
+    <div class="md-3 col-md-8">
+    <label for="location" class="form-label">Location:</label>
+    <input name="listing[location]" value="<%= listing.location %>" class="form-control" required>
+    </div>
+    </div>
+
+    <div class="mb-3">
+      <label for="country" class="form-label">Country:</label>
+    <input name="listing[country]" value="<%= listing.country %>" class="form-control" required>
+    </div>
+
+    <button type="submit" class="btn btn-dark edit-btn mt-3" style="background-color: rgb(237, 90, 90);">Update</button>
+    <br/><br/>
+  </form>
+    </div>
+  </div>
+  <script src="/js/script.js"></script>
+</body>
+

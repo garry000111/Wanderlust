@@ -1,0 +1,30 @@
+<% layout("/layouts/boilerplate") -%>
+
+<body>
+  
+
+  <h3>WanderLust</h3>
+  <form method="GET" action="/listing/new">
+    <button>Create New</button>
+  </form>
+
+  <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+  <% for(let x of list){ %>
+    <a href="/listing/<%= x._id %>" class="listing-link">
+  <div class="col">
+    <div class="card h-100">
+      <img src="<%= x.image.url %>" class="card-img-top" alt="Listing" />
+      <div class="card-body">
+        <p class="card-text">
+          <%= x.title %>
+          <br />
+          &#8377; <%= x.price.toLocaleString("en-IN") %>
+        </p>
+      </div>
+    </div>
+  </div>
+  </a>
+  <% } %>
+</div>
+
+</body>
